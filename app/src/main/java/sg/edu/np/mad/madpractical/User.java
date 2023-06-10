@@ -2,10 +2,7 @@ package sg.edu.np.mad.madpractical;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
 import androidx.annotation.NonNull;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -74,10 +71,10 @@ public class User implements Parcelable {
         for (int i = 0; i < numUser; i++) {
             String randomName = "Name" + rd.nextInt();
             String randomDesc = "Description " + rd.nextInt();
-            int id = i;
+            int placeholderId = i;
             boolean randomFollowStatus = rd.nextBoolean();
 
-            User randomUser = new User(randomName, randomDesc, id, randomFollowStatus);
+            User randomUser = new User(randomName, randomDesc, placeholderId, randomFollowStatus);
             testUserList.add(randomUser);
         }
 

@@ -15,11 +15,11 @@ public class MessageGroup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message_group);
 
-        //Layout Variables
+        //Layout Components
         Button grp1Button = (Button) findViewById(R.id.grp1Button);
         Button grp2Button = (Button) findViewById(R.id.grp2Button);
 
-        //Event Triggers
+        //Group 1 Button Mechanism Set-up
         grp1Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -31,6 +31,7 @@ public class MessageGroup extends AppCompatActivity {
             }
         });
 
+        //Group 2 Button Mechanism Set-up
         grp2Button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();

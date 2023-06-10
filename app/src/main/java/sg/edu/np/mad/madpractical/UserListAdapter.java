@@ -73,7 +73,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     profileInfo.setCancelable(true);
                     profileInfo.setPositiveButton("VIEW", new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int id){
-                            MainActivity.putExtra("user", s);
+                            MainActivity.putExtra("userID", s.getId());
                             v.getContext().startActivity(MainActivity);
                         }
                     });
@@ -105,7 +105,7 @@ public class UserListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     profileInfo.setCancelable(true);
                     profileInfo.setPositiveButton("VIEW", new DialogInterface.OnClickListener(){
                         public void onClick(DialogInterface dialog, int id){
-                            MainActivity.putExtra("user", s);
+                            MainActivity.putExtra("userID", s.getId());
                             v.getContext().startActivity(MainActivity);
                         }
                     });

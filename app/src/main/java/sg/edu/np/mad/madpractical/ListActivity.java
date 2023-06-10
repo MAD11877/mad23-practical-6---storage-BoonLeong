@@ -5,78 +5,65 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
-    private static final int REQUEST_CODE = 1;
-
-    static ArrayList<User> testUserList;
-    static UserListAdapter userListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        //Layout Variables
-        RecyclerView userListRV = findViewById(R.id.userList_RV);
-
-        //Initialization
-        testUserList = User.createRdTestUserList(20);
-
         /*
-        Gson gson = new Gson();
-        String json;
-
-        SharedPreferences userData = getSharedPreferences("userData", MODE_PRIVATE);
-        SharedPreferences.Editor editor = userData.edit();
-        for (int i = 0; i < testUserList.size(); i++) {
-            User user = testUserList.get(i);
-            json = gson.toJson(user);
-            editor.putString("userId" + user.getId(), json);
+        // Check if the user is authenticated
+        if (!isUserAuthenticated()) {
+            // User is not authenticated, redirect to LoginActivity
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+            finish(); // Optional: finish the LauncherActivity to prevent going back to it when pressing the back button from the LoginActivity
+            return;
         }
-        editor.apply();
+
+        // User is authenticated, continue with the normal flow
          */
 
-        userListAdapter = new UserListAdapter(testUserList);
+        //Layout Components
+        RecyclerView userListRV = findViewById(R.id.userList_RV);
+
+        //Test User Data Initialization
+        UserDBHandler userDBHandler = new UserDBHandler(this, null, null, 1);
+        if (userDBHandler.isDatabaseEmpty() == true) {
+            ArrayList<User> testUserList = User.createRdTestUserList(20);
+            for (User testUser : testUserList) {
+                userDBHandler.addUser(testUser);
+            }
+        }
+
+        ArrayList<User> testUserList = userDBHandler.getUsers();
+
+        //RecyclerView Set-up
+        UserListAdapter userListAdapter = new UserListAdapter(testUserList);
         LinearLayoutManager userListLayoutManager = new LinearLayoutManager(this);
         userListRV.setLayoutManager(userListLayoutManager);
         userListRV.setItemAnimator(new DefaultItemAnimator());
         userListRV.setAdapter(userListAdapter);
     }
 
-    /*
-    protected void onResume() {
-        super.onResume();
-        // Retrieve the value from SharedPreferences
-        SharedPreferences userData = getSharedPreferences("userData", MODE_PRIVATE);
-        String objectValue = userData.getString("object_value", null);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
-        // Update the text based on the retrieved value
-        if (objectValue != null) {
-            textView.setText(objectValue);
-        }
+        UserDBHandler dbHandler = new UserDBHandler(this, null, null, 1);
+        dbHandler.deleteAllUsers();
     }
 
-     */
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            User user = data.getParcelableExtra("user");
-            int index = testUserList.indexOf(user);
-            if (index >= 0) {
-                testUserList.set(index, user);
-                userListAdapter.notifyDataSetChanged();
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
+    private boolean isUserAuthenticated() {
+        // Add your logic here to check if the user is authenticated
+        // For example, you can check if a session or token exists
+        // Return true if the user is authenticated, false otherwise
+        // You may need to implement your own authentication mechanism based on your requirements
+        // This is just a placeholder method
+        return false;
     }
 }
