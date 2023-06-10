@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import java.util.ArrayList;
 
@@ -14,7 +15,6 @@ public class ListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-
         /*
         // Check if the user is authenticated
         if (!isUserAuthenticated()) {
@@ -56,14 +56,5 @@ public class ListActivity extends AppCompatActivity {
 
         UserDBHandler dbHandler = new UserDBHandler(this, null, null, 1);
         dbHandler.deleteAllUsers();
-    }
-
-    private boolean isUserAuthenticated() {
-        // Add your logic here to check if the user is authenticated
-        // For example, you can check if a session or token exists
-        // Return true if the user is authenticated, false otherwise
-        // You may need to implement your own authentication mechanism based on your requirements
-        // This is just a placeholder method
-        return false;
     }
 }
